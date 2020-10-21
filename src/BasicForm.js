@@ -42,9 +42,28 @@ const validationRules = Yup.object().shape({
             then: Yup
                 .string()
                 .matches(/^(69)([0-9]{8})$/, "Phone must be mobile")
-                .required('You need to provide a phone')
-        })
+                .required("You need to provide a phone")
+        }),
 
+    fileInput: Yup.array()
+        .nullable()
+        .required("You need to provide a file")
+
+        // Yup.mixed()
+        // .required("You need to provide a file")
+        // .test(
+        //     "fileSize",
+        //     "File too large",
+        //     value => value && value.size <= 2000000 // valid file <= 2MB
+        // )
+
+    // .test('isValidFile', 'You need to upload a file', (value) => {
+    //     console.log(value)
+    //     return value && value[0].size !== undefined;
+    // })
+    //     .test('fileFormat', 'PDF only', (value) => {
+    //         console.log(value); return value && ['application/pdf'].includes(value.type);
+    //     }),
 
 });
 
@@ -53,7 +72,13 @@ export const BasicForm = () => {
 
 
     const {register, handleSubmit, errors, watch} = useForm({
-        defaultValues: {firstName: '', lastName: '', email: '', hasPhone: false, phoneNumber: ''},
+        defaultValues: {
+            firstName: '',
+            lastName: '',
+            email: '',
+            hasPhone: false,
+            phoneNumber: '',
+            fileInput: ''},
         mode: 'onBlur',
         resolver: yupResolver(validationRules)
     });
@@ -131,7 +156,7 @@ export const BasicForm = () => {
                                         name="hasPhone"
                                     />
                                 }
-                                label="Do you have a phone"
+                                label="Do you have a phone?"
                             />
 
                         </FormGroup>
@@ -140,24 +165,49 @@ export const BasicForm = () => {
 
                 </Row>
 
-                <Row form>
+                {hasPhone && (
 
-                    <Col md={6}>
+                    <Row form>
 
-                        <FormGroup>
+                        <Col md={6}>
 
-                            { hasPhone && (
+                            <FormGroup>
+
+
                                 <FormInput
                                     register={register}
-
                                     id="phoneNumber"
                                     type="text"
                                     label="Phone Number"
                                     name="phoneNumber"
                                     error={errors.phoneNumber}
                                 />
-                            )
-                            }
+
+                            </FormGroup>
+
+                        </Col>
+
+                    </Row>
+
+                )}
+
+                <Row form>
+
+                    <Col md={6}>
+
+                        <FormGroup>
+
+                            <FormInput
+                                register={register}
+                                id="fileInput"
+                                label="Upload a file"
+                                type="file"
+                                name="fileInput"
+                                error={errors.fileInput}
+                            />
+
+                            {/*<input ref={register} type="file" name="fileInput" id="fileInput"/>*/}
+                            {/*{errors.fileInput && <p>{errors.fileInput.message}</p>}*/}
                         </FormGroup>
 
                     </Col>
