@@ -45,7 +45,7 @@ const validationSchema = Yup.object({
         .required('Required')
 })
 
-function YoutubeForm () {
+function OldYoutubeForm () {
 
     //this example uses Yup for validation
     const formik = useFormik({
@@ -65,8 +65,9 @@ function YoutubeForm () {
                 type='text'
                 id='name'
                 name='name'
-                // onChange, onBlur, value fields
-                {...formik.getFieldProps('name')}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.name}
             />
             {/*formik here could also be applied to the fields that have been touched OR to some
             to improve UX (need handleBlur for that to do the touch)*/}
@@ -79,8 +80,9 @@ function YoutubeForm () {
                 type='text'
                 id='email'
                 name='email'
-                // onChange, onBlur, value fields
-                {...formik.getFieldProps('email')}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
             />
             {formik.touched.email && formik.errors.email ? (
                 <p className='error'>{formik.errors.email}</p>
@@ -91,8 +93,9 @@ function YoutubeForm () {
                 type='text'
                 id='channel'
                 name='channel'
-                // onChange, onBlur, value fields
-                {...formik.getFieldProps('channel')}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.channel}
             />
             {formik.touched.channel && formik.errors.channel ? (
                 <p className='error'>{formik.errors.channel}</p>
@@ -103,4 +106,4 @@ function YoutubeForm () {
     )
 }
 
-export default YoutubeForm;
+export default OldYoutubeForm;
