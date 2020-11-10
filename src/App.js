@@ -1,15 +1,12 @@
 import React, { Component } from "react";
-// import {LoginForm} from "./LoginFormReactHookForm"
-import {BasicForm} from './BasicForm';
-
+import YoutubeForm from './components/YoutubeForm'
 
 class App extends Component {
     render() {
         return (
             <main>
-                <section>
-                    <BasicForm />
-                </section>
+                <YoutubeForm/>
+
             </main>
         );
     }
