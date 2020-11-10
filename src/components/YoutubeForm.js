@@ -1,6 +1,7 @@
 import React from 'react'
-import { Formik } from 'formik'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
+import TextError from './TextError'
 
 const initialValues = {
     name: '',
@@ -63,48 +64,41 @@ function YoutubeForm () {
             validationSchema={validationSchema}
             onSubmit={onSubmit}
         >
-            <form>
+            <Form>
 
                 <label htmlFor='name'>Name</label>
-                <input
+
+                {/*1. hooks input to formik*/}
+                {/*2. no need to write onBlur, onChange, value */}
+                {/*1. uses name attribute to match formik state*/}
+                <Field
                     type='text'
                     id='name'
                     name='name'
-                    // onChange, onBlur, value fields
-                    {...formik.getFieldProps('name')}
                 />
-                {/*formik here could also be applied to the fields that have been touched OR to some
-            to improve UX (need handleBlur for that to do the touch)*/}
-                {formik.touched.name && formik.errors.name ? (
-                    <p className='error'>{formik.errors.name}</p>
-                ) : null}
+
+                <ErrorMessage name='name' component={TextError}/>
 
                 <label htmlFor='email'>E-mail</label>
-                <input
+                <Field
                     type='text'
                     id='email'
                     name='email'
-                    // onChange, onBlur, value fields
-                    {...formik.getFieldProps('email')}
                 />
-                {formik.touched.email && formik.errors.email ? (
-                    <p className='error'>{formik.errors.email}</p>
-                ) : null}
+
+                <ErrorMessage name="email" component={TextError}/>
 
                 <label htmlFor='channel'>Channel</label>
-                <input
+                <Field
                     type='text'
                     id='channel'
                     name='channel'
-                    // onChange, onBlur, value fields
-                    {...formik.getFieldProps('channel')}
                 />
-                {formik.touched.channel && formik.errors.channel ? (
-                    <p className='error'>{formik.errors.channel}</p>
-                ) : null}
+
+                <ErrorMessage name='channel' component={TextError}/>
 
                 <button type='submit'>Submit</button>
-            </form>
+            </Form>
         </Formik>
     );
 }
