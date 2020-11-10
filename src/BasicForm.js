@@ -45,9 +45,18 @@ const validationRules = Yup.object().shape({
                 .required("You need to provide a phone")
         }),
 
-    fileInput: Yup.array()
-        .nullable()
-        .required("You need to provide a file")
+    fileInput: Yup
+        .mixed()
+        .required("A file is required")
+        .test(
+            "fileSize",
+            "File too large",
+            value => value && value.size <= 160 * 1024
+        )
+
+    // fileInput: Yup.array()
+    //     .nullable()
+    //     .required("You need to provide a file")
 
         // Yup.mixed()
         // .required("You need to provide a file")
